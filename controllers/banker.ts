@@ -1,14 +1,24 @@
 import {Request, Response } from 'express';
-import { Client } from '../entities/Client';
 import { Banker } from '../entities/Banker';
+import { Client } from '../entities/Client';
 import { AppDataSource } from '../Datasource';
+
+export const createBanker = async (req:Request,res:Response)=>{
+    try{
+        const banker=Banker.create(req.body)
+        await banker.save()
+	    return res.json(banker)
+    } catch (err) {
+        console.log(err.message);
+      }
+
+} 
+
 export const connect = async (req:Request,res:Response)=>{
     try{
         const banker_id=parseInt(req.params.bankerId)
         const client_id=parseInt(req.params.clientId)
-		// const client = await Client.findOneBy({id:client_id})
         const client= await AppDataSource.getRepository(Client).findOneBy({id:client_id})
-		// const banker = await Banker.findOneBy({id:banker_id})
         const banker= await AppDataSource.getRepository(Banker).findOneBy({id:banker_id})
         if (banker && client) {
 			console.log(banker.clients)
@@ -30,4 +40,3 @@ export const connect = async (req:Request,res:Response)=>{
 		console.log(err.message)
       }
 } 
-

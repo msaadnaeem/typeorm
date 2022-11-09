@@ -6,9 +6,7 @@ export const connect = async (req:Request,res:Response)=>{
     try{
         const banker_id=parseInt(req.params.bankerId)
         const client_id=parseInt(req.params.clientId)
-		// const client = await Client.findOneBy({id:client_id})
         const client= await AppDataSource.getRepository(Client).findOneBy({id:client_id})
-		// const banker = await Banker.findOneBy({id:banker_id})
         const banker= await AppDataSource.getRepository(Banker).findOneBy({id:banker_id})
         if (banker && client) {
 			console.log(banker.clients)

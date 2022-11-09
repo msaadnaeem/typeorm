@@ -1,3 +1,4 @@
+//add client to banker
 import {Request, Response } from 'express';
 import { Client } from '../entities/Client';
 import { Banker } from '../entities/Banker';
